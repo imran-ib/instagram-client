@@ -6,7 +6,7 @@ import { Layout } from '../../Layout/Layout';
 import Styled from 'styled-components';
 
 const SubscriptionsStyles = Styled.div`
- > p {
+  p  {
      color: red;
  }
 
