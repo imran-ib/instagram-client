@@ -7,7 +7,7 @@ interface ErrorPageProps {
 
 const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode }) => {
   return (
-    <div>
+    <div style={{ margin: '0 auto' }}>
       {statusCode
         ? `An error ${statusCode} occurred on server`
         : 'An error occurred on client'}
