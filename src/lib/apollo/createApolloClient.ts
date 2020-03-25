@@ -48,6 +48,9 @@ const createApolloClient = (initialState = {}, ctx: NextPageContext) => {
         ...headers,
         authorization: token ? `Bearer ${token}` : '',
       },
+      fetchOptions: {
+        credentials: 'include',
+      },
     };
   });
 

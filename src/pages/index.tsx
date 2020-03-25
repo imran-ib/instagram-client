@@ -1,12 +1,11 @@
 import React from 'react';
-import { NextPage } from 'next';
+import { Layout } from '../components/Layout/Layout';
 
-const IndexPage: NextPage = () => {
+const Home = () => {
   return (
-    <div>
+    <Layout>
       <h1>Home</h1>
-    </div>
+    </Layout>
   );
 };
-
-export default IndexPage;
+export default Home;

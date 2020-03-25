@@ -1,5 +1,17 @@
 import React from 'react';
 import { NextPage } from 'next';
+import Styled from 'styled-components';
+
+const ErrorStyles = Styled.div`
+ > *{
+
+   width: 100Vw;
+   height: 100vh;
+   margin: 0 auto;
+   color:red;
+  }
+
+`;
 
 interface ErrorPageProps {
   statusCode: number;
@@ -7,11 +19,11 @@ interface ErrorPageProps {
 
 const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode }) => {
   return (
-    <div style={{ margin: '0 auto' }}>
+    <ErrorStyles>
       {statusCode
         ? `An error ${statusCode} occurred on server`
         : 'An error occurred on client'}
-    </div>
+    </ErrorStyles>
   );
 };
 

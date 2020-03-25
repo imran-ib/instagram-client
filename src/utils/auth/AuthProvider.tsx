@@ -1,15 +1,28 @@
 import React, { createContext, useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-
 import { logout } from './helpers';
 import ErrorPage from '../../pages/_error';
 
 // TODO: Set-up your real user query here
-const GET_CURRENT_USER = gql`
-  query getCurrentUser {
+export const Me = gql`
+  query Me {
     me {
       id
+      firstName
+      lastName
+      fullName
+      email
+      age
+      phone
+      avatar
+      lastLat
+      lastLng
+      lastOrientation
+      isDriving
+      isRiding
+      isTaken
+      isVerified
     }
   }
 `;
@@ -19,7 +32,7 @@ type AuthContextParams = [{ data: any }, typeof logout];
 const AuthContext = createContext<AuthContextParams>([{ data: null }, logout]);
 
 const AuthProvider: React.FC = ({ children }) => {
-  const { loading, data, error } = useQuery(GET_CURRENT_USER);
+  const { loading, data, error } = useQuery(Me);
 
   // Usally you dont see this, because we have no "loading" state on SSR
   if (loading) {
@@ -31,6 +44,16 @@ const AuthProvider: React.FC = ({ children }) => {
     console.error(error);
 
     return <ErrorPage statusCode={401} />;
+  }
+  if (!data.me) {
+    return (
+      <>
+        <h2 style={{ textAlign: 'center', marginTop: '50px' }}>
+          Please Sign In before Continuing
+        </h2>
+        <h1> Login Form</h1>
+      </>
+    );
   }
 
   return (
