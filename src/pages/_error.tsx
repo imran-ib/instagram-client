@@ -1,6 +1,7 @@
 import React from 'react';
 import { NextPage } from 'next';
 import Styled from 'styled-components';
+import { Layout } from '../components/Layout/Layout';
 
 const ErrorStyles = Styled.div`
  > *{
@@ -19,11 +20,13 @@ interface ErrorPageProps {
 
 const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode }) => {
   return (
-    <ErrorStyles>
-      {statusCode
-        ? `An error ${statusCode} occurred on server`
-        : 'An error occurred on client'}
-    </ErrorStyles>
+    <Layout>
+      <ErrorStyles>
+        {statusCode
+          ? `An error ${statusCode} occurred on server`
+          : 'An error occurred on client'}
+      </ErrorStyles>
+    </Layout>
   );
 };
 

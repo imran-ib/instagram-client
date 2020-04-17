@@ -1,28 +1,39 @@
 import React, { createContext, useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
+
 import gql from 'graphql-tag';
 import { logout } from './helpers';
 import ErrorPage from '../../pages/_error';
+import Spinner from '../Spinner';
+import { toast } from 'react-toastify';
 
 // TODO: Set-up your real user query here
 export const Me = gql`
-  query Me {
-    me {
+  query {
+    CurrentUser {
       id
+      email
       firstName
       lastName
       fullName
-      email
-      age
-      phone
+      username
       avatar
-      lastLat
-      lastLng
-      lastOrientation
-      isDriving
-      isRiding
-      isTaken
-      isVerified
+      bio
+      likes {
+        id
+      }
+      posts {
+        id
+      }
+      followedBy {
+        id
+      }
+      following {
+        id
+      }
+      posts {
+        caption
+      }
     }
   }
 `;
@@ -45,7 +56,8 @@ const AuthProvider: React.FC = ({ children }) => {
 
     return <ErrorPage statusCode={401} />;
   }
-  if (!data.me) {
+
+  if (!data.CurrentUser) {
     return (
       <>
         <h2 style={{ textAlign: 'center', marginTop: '50px' }}>
@@ -63,7 +75,15 @@ const AuthProvider: React.FC = ({ children }) => {
   );
 };
 
+function useUser() {
+  const { loading, data, error } = useQuery(Me);
+
+  if (data) {
+    return data.CurrentUser;
+  }
+}
+
 // Returns authentication-related data and functions
 const useAuth = (): AuthContextParams => useContext(AuthContext);
 
-export { AuthProvider, useAuth };
+export { AuthProvider, useAuth, useUser };

@@ -1,19 +1,18 @@
 import React from 'react';
-import Link from 'next/link';
+import Navbar from './Navbar';
+import styled from 'styled-components';
+
+const HeaderStyles = styled.div`
+  width: 100vw;
+  height: 53px;
+  background-color: ${({ theme }) => theme.whiteBox};
+`;
+
 const Header = () => {
   return (
-    <>
-      <Link href="/">
-        <a>Home</a>
-      </Link>
-      <Link href="/login">
-        <a>Login</a>
-      </Link>
-      <Link href="/private">
-        <a>Private</a>
-      </Link>
-      <h1>Header Components</h1>
-    </>
+    <HeaderStyles>
+      <Navbar />
+    </HeaderStyles>
   );
 };
 

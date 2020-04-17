@@ -3,6 +3,11 @@ import React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import withData from '../lib/apollo/withData';
 import nookies from 'nookies';
+import { ToastContainer } from 'react-toastify';
+import { GlobalStyle, theme } from '../styles/GlobalStyles';
+import 'react-toastify/dist/ReactToastify.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { ThemeProvider } from 'styled-components';
 
 class MyApp extends App {
   state = { Token: '' };
@@ -13,16 +18,9 @@ class MyApp extends App {
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
     }
-
-    // console.log(ctx);
     pageProps.query = ctx.query;
 
     return { pageProps, Token };
-  }
-  componentDidMount() {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('Token', this.props.Token.Token);
-    }
   }
 
   render() {
@@ -31,7 +29,11 @@ class MyApp extends App {
     return (
       <>
         <ApolloProvider client={apollo}>
-          <Component {...pageProps} />
+          <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <ToastContainer />
+            <Component {...pageProps} />
+          </ThemeProvider>
         </ApolloProvider>
       </>
     );
