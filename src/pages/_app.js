@@ -5,10 +5,12 @@ import withData from '../lib/apollo/withData';
 import nookies from 'nookies';
 import { ToastContainer } from 'react-toastify';
 import { GlobalStyle, theme } from '../styles/GlobalStyles';
+import { ThemeProvider } from 'styled-components';
+import config from 'react-reveal/globals';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ThemeProvider } from 'styled-components';
 
+config({ ssrFadeout: true });
 class MyApp extends App {
   state = { Token: '' };
   static async getInitialProps({ Component, ctx }) {

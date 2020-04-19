@@ -1,16 +1,15 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import { FEEDS_QUERY } from '../../Resolvers/PostResolvers';
 import Spinner from '../../utils/Spinner';
 import PostCard from './Post/PostCard';
 import styled from 'styled-components';
+import { useFeeds_QueryQuery } from '../../generated/graphql';
 
 const FeedsStyles = styled.div`
   margin-top: 30px;
 `;
 
 const Feeds = () => {
-  const { data, loading, error } = useQuery(FEEDS_QUERY);
+  const { data, loading, error } = useFeeds_QueryQuery();
 
   if (loading) return <Spinner />;
   if (!data)

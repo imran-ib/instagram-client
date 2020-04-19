@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const Me = gql`
-  query {
+  query Me {
     CurrentUser {
       id
       email
@@ -10,6 +10,7 @@ export const Me = gql`
       fullName
       avatar
       bio
+      username
       likes {
         id
       }
@@ -30,13 +31,13 @@ export const Me = gql`
 `;
 
 export const CONFIRM_LOGIN_SCRETE = gql`
-  mutation($email: String!, $key: String!) {
+  mutation CONFIRM_LOGIN_SCRETE($email: String!, $key: String!) {
     ConfirmSecret(email: $email, key: $key)
   }
 `;
 
 export const REQUEST_LOGIN_SCRETE = gql`
-  mutation($email: String!) {
+  mutation REQUEST_LOGIN_SCRETE($email: String!) {
     RequestLoginSecret(email: $email) {
       email
     }
@@ -44,7 +45,7 @@ export const REQUEST_LOGIN_SCRETE = gql`
 `;
 
 export const USER_SIGNUP_MUTATION = gql`
-  mutation(
+  mutation USER_SIGNUP_MUTATION(
     $username: String!
     $email: String!
     $firstName: String
@@ -64,17 +65,6 @@ export const USER_SIGNUP_MUTATION = gql`
       email
       fullName
       email
-    }
-  }
-`;
-
-export const ChatSubscription = gql`
-  subscription {
-    NewMessage {
-      mutation
-      node {
-        text
-      }
     }
   }
 `;

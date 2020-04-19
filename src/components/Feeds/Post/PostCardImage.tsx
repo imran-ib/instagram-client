@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Carousel from 'react-bootstrap/Carousel';
 
 const PostCardImageStyles = styled.div`
   img {
@@ -18,11 +19,21 @@ type PostCardImageProps = {
 };
 
 const PostCardImage: React.FC<PostCardImageProps> = ({ files, username }) => {
+  const images = files.map((file) => file.file);
+
   return (
     <PostCardImageStyles>
-      {files.length && (
-        <img src={files[0].file} alt={`Images Posted by ${username}`} />
-      )}
+      <Carousel>
+        {images.map((image, i) => (
+          <Carousel.Item key={i}>
+            <img
+              className="d-block w-100"
+              src={image}
+              alt={`Posted by ${username}`}
+            />
+          </Carousel.Item>
+        ))}
+      </Carousel>
     </PostCardImageStyles>
   );
 };

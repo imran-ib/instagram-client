@@ -5,10 +5,8 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import Alert from 'react-bootstrap/Alert';
 import { toast } from 'react-toastify';
-import { useMutation } from '@apollo/react-hooks';
 import { useForm } from 'react-hook-form';
-
-import { USER_SIGNUP_MUTATION } from '../../../Resolvers/AuthResolvers';
+import { useUser_Signup_MutationMutation } from '../../../generated/graphql';
 
 const SignupStyles = styled.div``;
 type SignupProps = {
@@ -26,16 +24,24 @@ type FormData = {
 };
 
 const Signup: React.FC<SignupProps> = ({ Action, setAction }) => {
-  const [inValidEmail, setinValidEmail] = useState(false);
-  const [createUser, { loading, error, called }] = useMutation(
-    USER_SIGNUP_MUTATION,
-  );
-  const { register, setValue, handleSubmit, errors } = useForm<FormData>();
+  const [
+    createUser,
+    { loading, error, called },
+  ] = useUser_Signup_MutationMutation();
+  const { register, handleSubmit, errors } = useForm<FormData>();
 
   if (error) toast.error(error.message);
 
   const onSubmit = (data: Record<string, any>) => {
-    createUser({ variables: { ...data } });
+    createUser({
+      variables: {
+        email: data.email,
+        username: data.username,
+
+        firstName: data.firstName,
+        lastName: data.lastName,
+      },
+    });
   };
 
   if (!loading && !error && called) {

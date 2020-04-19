@@ -1,49 +1,14 @@
 import React, { createContext, useContext } from 'react';
-import { useQuery } from '@apollo/react-hooks';
-
-import gql from 'graphql-tag';
 import { logout } from './helpers';
 import ErrorPage from '../../pages/_error';
-import Spinner from '../Spinner';
-import { toast } from 'react-toastify';
-
-// TODO: Set-up your real user query here
-export const Me = gql`
-  query {
-    CurrentUser {
-      id
-      email
-      firstName
-      lastName
-      fullName
-      username
-      avatar
-      bio
-      likes {
-        id
-      }
-      posts {
-        id
-      }
-      followedBy {
-        id
-      }
-      following {
-        id
-      }
-      posts {
-        caption
-      }
-    }
-  }
-`;
+import { useMeQuery } from '../../generated/graphql';
 
 type AuthContextParams = [{ data: any }, typeof logout];
 
 const AuthContext = createContext<AuthContextParams>([{ data: null }, logout]);
 
 const AuthProvider: React.FC = ({ children }) => {
-  const { loading, data, error } = useQuery(Me);
+  const { loading, data, error } = useMeQuery();
 
   // Usally you dont see this, because we have no "loading" state on SSR
   if (loading) {
@@ -76,9 +41,9 @@ const AuthProvider: React.FC = ({ children }) => {
 };
 
 function useUser() {
-  const { loading, data, error } = useQuery(Me);
+  const { loading, data, error } = useMeQuery();
 
-  if (data) {
+  if (data && !loading) {
     return data.CurrentUser;
   }
 }

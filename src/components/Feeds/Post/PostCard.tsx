@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PostCardHeader from './PostCardHeader';
 import PostCardImage from './PostCardImage';
 import PostCardFooter from './PostCardFooter/PostCardFooter';
-import { PostCardProps } from '../FeedTypes';
+import { Post } from '../../../generated/graphql';
 
 const PostCardStyles = styled.div`
   margin: 0 auto;
@@ -13,10 +13,11 @@ const PostCardStyles = styled.div`
   margin-bottom: 60px;
 `;
 
-const PostCard: React.FC<PostCardProps> = ({ feed }) => {
+const PostCard = ({ feed }) => {
   return (
     <PostCardStyles>
       <PostCardHeader
+        location={feed.location}
         username={feed.author.username}
         avatar={feed.author.avatar}
       />

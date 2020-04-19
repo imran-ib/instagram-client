@@ -4,6 +4,7 @@ import { Home } from '@styled-icons/foundation/Home';
 import { User } from '@styled-icons/boxicons-solid/User';
 import { Direction } from '@styled-icons/entypo/Direction';
 import { Heart } from '@styled-icons/evil/Heart';
+import { Heart as SolidHeart } from '@styled-icons/evaicons-solid/Heart';
 import { CompassOutline } from '@styled-icons/evaicons-outline/CompassOutline';
 import { DotsHorizontal } from '@styled-icons/heroicons-outline/DotsHorizontal';
 import { MessageRounded } from '@styled-icons/boxicons-regular/MessageRounded';
@@ -44,6 +45,11 @@ export const DirectionIcon = styled(Direction)`
 export const HeartIcon = styled(Heart)`
   width: 30px;
   border: none;
+`;
+export const SolidHeartIcon = styled(SolidHeart)`
+  width: 30px;
+  border: none;
+  fill: red;
 `;
 export const HeartIconSmall = styled(Heart)`
   width: 18px;

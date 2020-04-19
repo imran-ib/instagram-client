@@ -3,23 +3,17 @@ export declare interface PostCardProps {
     id: string;
     caption: string;
     location: string;
-    authorId: string;
     author: {
       id: string;
       email: string;
       username: string;
       avatar?: string;
     };
-    comments?: {
-      id: string;
-      text: string;
-      author: {
-        username: string;
-      };
-    }[];
+
     likes?: {
       id: string;
       user: {
+        id: string;
         username: string;
       };
     }[];
@@ -29,4 +23,13 @@ export declare interface PostCardProps {
     }[];
     createdAt: string;
   };
+}
+export declare interface CommentsProps {
+  comments?: {
+    id: string;
+    text: string;
+    author: {
+      username: string;
+    };
+  }[];
 }

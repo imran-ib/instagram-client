@@ -30,16 +30,22 @@ const PostCardHeaderStyled = styled.div`
       }
     }
   }
+  .location {
+    font-weight: 400;
+    font-size: 12px;
+  }
 `;
 
 type PostCardHeaderProps = {
   username: string;
   avatar?: string;
+  location: string;
 };
 
 const PostCardHeader: React.FC<PostCardHeaderProps> = ({
   username,
   avatar,
+  location,
 }) => {
   const [show, setShow] = useState(false);
 
@@ -56,7 +62,9 @@ const PostCardHeader: React.FC<PostCardHeaderProps> = ({
         </div>
         <div className="username">
           <Link href="/profile/username">
-            <a>{username}</a>
+            <a>
+              {username} <br /> <span className="location"> {location} </span>
+            </a>
           </Link>
         </div>
       </div>

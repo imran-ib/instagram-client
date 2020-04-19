@@ -4,14 +4,13 @@ import styled from 'styled-components';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
-import { useMutation } from '@apollo/react-hooks';
 import Alert from 'react-bootstrap/Alert';
 import { toast } from 'react-toastify';
-import {
-  REQUEST_LOGIN_SCRETE,
-  CONFIRM_LOGIN_SCRETE,
-} from '../../../Resolvers/AuthResolvers';
 import { useRouter } from 'next/router';
+import {
+  useRequest_Login_ScreteMutation,
+  useConfirm_Login_ScreteMutation,
+} from '../../../generated/graphql';
 
 const LoginStyles = styled.div``;
 
@@ -25,11 +24,11 @@ const Login: React.FC<LoginProps> = ({ Action, setAction }) => {
   const [
     RequestLoginSecret,
     { loading: Rloading, error: Rerror, called: Rcalled },
-  ] = useMutation(REQUEST_LOGIN_SCRETE);
+  ] = useRequest_Login_ScreteMutation();
   const [
     ConfirmSecret,
     { loading: Cloading, error: Cerror, called: Ccalled },
-  ] = useMutation(CONFIRM_LOGIN_SCRETE);
+  ] = useConfirm_Login_ScreteMutation();
   const [activeEmail, setactiveEmail] = useState(true);
   const [activeKey, setactiveKey] = useState(false);
   const { register, handleSubmit, watch, errors } = useForm();
