@@ -1901,17 +1901,24 @@ export type User_Signup_MutationMutation = { __typename?: 'Mutation' } & {
   createUser: { __typename?: 'User' } & Pick<User, 'id' | 'email' | 'fullName'>;
 };
 
-export type Search_Post_QueryQueryVariables = {
+export type SearchQueryVariables = {
   term: Scalars['String'];
 };
 
-export type Search_Post_QueryQuery = { __typename?: 'Query' } & {
+export type SearchQuery = { __typename?: 'Query' } & {
   SearchPost?: Maybe<
     Array<
-      { __typename?: 'Post' } & Pick<
-        Post,
-        'id' | 'caption' | 'location' | 'authorId'
-      >
+      { __typename?: 'Post' } & Pick<Post, 'id'> & {
+          files: Array<{ __typename?: 'File' } & Pick<File, 'id' | 'file'>>;
+          likes: Array<{ __typename?: 'Like' } & Pick<Like, 'id'>>;
+        }
+    >
+  >;
+  UserSearch?: Maybe<
+    Array<
+      { __typename?: 'User' } & Pick<User, 'id' | 'avatar' | 'username'> & {
+          following: Array<{ __typename?: 'User' } & Pick<User, 'id'>>;
+        }
     >
   >;
 };
@@ -2408,120 +2415,117 @@ export type User_Signup_MutationMutationOptions = ApolloReactCommon.BaseMutation
   User_Signup_MutationMutation,
   User_Signup_MutationMutationVariables
 >;
-export const Search_Post_QueryDocument = gql`
-  query SEARCH_POST_QUERY($term: String!) {
+export const SearchDocument = gql`
+  query SEARCH($term: String!) {
     SearchPost(term: $term) {
       id
-      caption
-      location
-      authorId
+      files {
+        id
+        file
+      }
+      likes {
+        id
+      }
+    }
+    UserSearch(term: $term) {
+      id
+      avatar
+      username
+      following {
+        id
+      }
     }
   }
 `;
-export type Search_Post_QueryComponentProps = Omit<
+export type SearchComponentProps = Omit<
   ApolloReactComponents.QueryComponentOptions<
-    Search_Post_QueryQuery,
-    Search_Post_QueryQueryVariables
+    SearchQuery,
+    SearchQueryVariables
   >,
   'query'
 > &
-  (
-    | { variables: Search_Post_QueryQueryVariables; skip?: boolean }
-    | { skip: boolean }
-  );
+  ({ variables: SearchQueryVariables; skip?: boolean } | { skip: boolean });
 
-export const Search_Post_QueryComponent = (
-  props: Search_Post_QueryComponentProps,
-) => (
-  <ApolloReactComponents.Query<
-    Search_Post_QueryQuery,
-    Search_Post_QueryQueryVariables
-  >
-    query={Search_Post_QueryDocument}
+export const SearchComponent = (props: SearchComponentProps) => (
+  <ApolloReactComponents.Query<SearchQuery, SearchQueryVariables>
+    query={SearchDocument}
     {...props}
   />
 );
 
-export type Search_Post_QueryProps<
-  TChildProps = {},
-  TDataName extends string = 'data'
-> = {
+export type SearchProps<TChildProps = {}, TDataName extends string = 'data'> = {
   [key in TDataName]: ApolloReactHoc.DataValue<
-    Search_Post_QueryQuery,
-    Search_Post_QueryQueryVariables
+    SearchQuery,
+    SearchQueryVariables
   >;
 } &
   TChildProps;
-export function withSearch_Post_Query<
+export function withSearch<
   TProps,
   TChildProps = {},
   TDataName extends string = 'data'
 >(
   operationOptions?: ApolloReactHoc.OperationOption<
     TProps,
-    Search_Post_QueryQuery,
-    Search_Post_QueryQueryVariables,
-    Search_Post_QueryProps<TChildProps, TDataName>
+    SearchQuery,
+    SearchQueryVariables,
+    SearchProps<TChildProps, TDataName>
   >,
 ) {
   return ApolloReactHoc.withQuery<
     TProps,
-    Search_Post_QueryQuery,
-    Search_Post_QueryQueryVariables,
-    Search_Post_QueryProps<TChildProps, TDataName>
-  >(Search_Post_QueryDocument, {
-    alias: 'searchPostQuery',
+    SearchQuery,
+    SearchQueryVariables,
+    SearchProps<TChildProps, TDataName>
+  >(SearchDocument, {
+    alias: 'search',
     ...operationOptions,
   });
 }
 
 /**
- * __useSearch_Post_QueryQuery__
+ * __useSearchQuery__
  *
- * To run a query within a React component, call `useSearch_Post_QueryQuery` and pass it any options that fit your needs.
- * When your component renders, `useSearch_Post_QueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useSearch_Post_QueryQuery({
+ * const { data, loading, error } = useSearchQuery({
  *   variables: {
  *      term: // value for 'term'
  *   },
  * });
  */
-export function useSearch_Post_QueryQuery(
+export function useSearchQuery(
   baseOptions?: ApolloReactHooks.QueryHookOptions<
-    Search_Post_QueryQuery,
-    Search_Post_QueryQueryVariables
+    SearchQuery,
+    SearchQueryVariables
   >,
 ) {
-  return ApolloReactHooks.useQuery<
-    Search_Post_QueryQuery,
-    Search_Post_QueryQueryVariables
-  >(Search_Post_QueryDocument, baseOptions);
+  return ApolloReactHooks.useQuery<SearchQuery, SearchQueryVariables>(
+    SearchDocument,
+    baseOptions,
+  );
 }
-export function useSearch_Post_QueryLazyQuery(
+export function useSearchLazyQuery(
   baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
-    Search_Post_QueryQuery,
-    Search_Post_QueryQueryVariables
+    SearchQuery,
+    SearchQueryVariables
   >,
 ) {
-  return ApolloReactHooks.useLazyQuery<
-    Search_Post_QueryQuery,
-    Search_Post_QueryQueryVariables
-  >(Search_Post_QueryDocument, baseOptions);
+  return ApolloReactHooks.useLazyQuery<SearchQuery, SearchQueryVariables>(
+    SearchDocument,
+    baseOptions,
+  );
 }
-export type Search_Post_QueryQueryHookResult = ReturnType<
-  typeof useSearch_Post_QueryQuery
->;
-export type Search_Post_QueryLazyQueryHookResult = ReturnType<
-  typeof useSearch_Post_QueryLazyQuery
->;
-export type Search_Post_QueryQueryResult = ApolloReactCommon.QueryResult<
-  Search_Post_QueryQuery,
-  Search_Post_QueryQueryVariables
+export type SearchQueryHookResult = ReturnType<typeof useSearchQuery>;
+export type SearchLazyQueryHookResult = ReturnType<typeof useSearchLazyQuery>;
+export type SearchQueryResult = ApolloReactCommon.QueryResult<
+  SearchQuery,
+  SearchQueryVariables
 >;
 export const Feeds_QueryDocument = gql`
   query FEEDS_QUERY {

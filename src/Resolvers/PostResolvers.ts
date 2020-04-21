@@ -1,13 +1,26 @@
-import { Comments_For_Post_QueryDocument } from './../generated/graphql';
 import gql from 'graphql-tag';
 
-export const SEARCH_POST_QUERY = gql`
-  query SEARCH_POST_QUERY($term: String!) {
+export const SEARCH = gql`
+  query SEARCH($term: String!) {
     SearchPost(term: $term) {
       id
       caption
-      location
-      authorId
+      files {
+        id
+        file
+      }
+      likes {
+        id
+      }
+    }
+    UserSearch(term: $term) {
+      id
+      avatar
+      username
+      postCount
+      following {
+        id
+      }
     }
   }
 `;
